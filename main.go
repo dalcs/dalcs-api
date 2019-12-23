@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"net/http"
 
 	"github.com/dalcs/dalcs-api/internal/cmd/rest"
@@ -9,19 +8,9 @@ import (
 )
 
 func main() {
-	http.HandleFunc("/", func(res http.ResponseWriter, req *http.Request) {
-		res.Header().Add("content-type", "application/json")
-		user := struct {
-			Username string
-			Password string
-		}{
-			Username: "mack",
-			Password: "secretpass",
-		}
-
-		userJSON, _ := json.Marshal(user)
-		res.Write(userJSON)
-	})
-	http.HandleFunc("/email", rest.InviteEmailHandler)
+	// TODO: Move route handling into internal/cmd/rest & setup cmds
+	http.HandleFunc("/v1/invite/email", rest.InviteEmailHandler)
+	http.HandleFunc("/v1/invite/verify", rest.InviteVerifyHandler)
+	http.HandleFunc("/v1/invite/invite", rest.InviteInviteHandler)
 	http.ListenAndServe(":8080", nil)
 }
