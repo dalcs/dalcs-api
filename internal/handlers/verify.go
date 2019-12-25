@@ -1,4 +1,4 @@
-package rest
+package api
 
 import (
 	"net/http"
@@ -6,6 +6,12 @@ import (
 
 func InviteVerifyHandler(res http.ResponseWriter, req *http.Request) {
 	// Do some rate limiting here...
+
+	// Verify code + email
+
+	// Generate signed JWT
+
+	// Return token
 
 	return
 }

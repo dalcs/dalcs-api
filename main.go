@@ -1,16 +1,18 @@
 package main
 
 import (
-	"net/http"
+	"os"
 
 	"github.com/dalcs/dalcs-api/internal/cmd/rest"
+	"github.com/jessevdk/go-flags"
 	_ "github.com/joho/godotenv/autoload"
 )
 
 func main() {
-	// TODO: Move route handling into internal/cmd/rest & setup cmds
-	http.HandleFunc("/v1/invite/email", rest.InviteEmailHandler)
-	http.HandleFunc("/v1/invite/verify", rest.InviteVerifyHandler)
-	http.HandleFunc("/v1/invite/invite", rest.InviteInviteHandler)
-	http.ListenAndServe(":8080", nil)
+	p := flags.NewParser(nil, flags.Default)
+	rest.Register(p)
+
+	if _, err := p.Parse(); err != nil {
+		os.Exit(1)
+	}
 }
